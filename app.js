@@ -9,13 +9,15 @@ const feedRoutes = require('./routes/feed');
 
 const app = express();
 
+const { v4: uuidv4 } = require('uuid');
+ 
 const fileStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'images');
-  },
-  filename: (req, file, cb) => {
-    cb(null, new Date().toISOString() + '-' + file.originalname);
-  }
+    destination: function(req, file, cb) {
+        cb(null, 'images');
+    },
+    filename: function(req, file, cb) {
+        cb(null, uuidv4())
+    }
 });
 
 const fileFilter = (req, file, cb) => {
